@@ -1,0 +1,384 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  min-height: 75px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: dodgerblue !important;
+}
+
+.disabled{
+  color: dimgray;
+}
+
+[v-cloak] {
+  display: none !important;
+}
+
+.bg-petrolBlue {
+  background-color: rgb(9, 17, 54);
+}
+
+button.bg-petrolBlue:hover {
+  background-color: darkslategrey;
+}
+
+.bg-lightGray {
+  background-color: lightgray;
+}
+
+button.bg-lightGray:hover {
+  background-color: darkslategray;
+}
+
+.bg-dimBlue{
+  background-color: rgb(15, 15, 80);
+}
+
+button.bg-dimBlue:hover{
+  background-color: darkslategrey;
+}
+
+.color-petrolBlue {
+  color: rgb(9, 17, 54);
+}
+
+.color-lightGray {
+  color: lightgray;
+}
+
+.logo-container {
+  width: 250px;
+  margin-right: 5px;
+}
+
+.logo-container-footer {
+  width: 250px;
+}
+
+.logo-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.logo-container-footer img{
+  width: 100%;
+  height: 100%;
+}
+
+.active-link {
+  color: dodgerblue !important;
+}
+
+.carousel-container{
+  width: 100vw;
+  max-height: 60vh;
+  
+}
+
+.carousel-container img{
+  width: 100%;
+}
+
+.td-debit {
+  color: red !important;
+}
+
+.td-credit {
+  color: green !important;
+}
+
+.user-dropdown {
+  width: 17rem;
+}
+
+.profile-pic {
+  font-size: 65px;
+}
+
+.loan-icon {
+  font-size: 80px;
+}
+
+.bankCard {
+  width: 310px;
+  height: 190px;
+  -webkit-perspective: 600px;
+  -moz-perspective: 600px;
+  perspective: 600px;
+}
+
+.bankCard__part{
+  box-shadow: 1px 1px #aaa3a3;
+  top: 0;
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  display: inline-block;
+  width: 310px;
+  height: 190px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 8px;
+
+  -webkit-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -moz-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -ms-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -o-transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+}
+
+.SILVER{
+  background-image:
+    linear-gradient(
+      to right bottom,
+      #a8a8a8,
+      #919191,
+      #868686,
+      #696969,
+      #646364
+    );
+}
+
+.GOLD{
+  background-image:
+    linear-gradient(
+      to right bottom,
+      #dda91b,
+      #cf9820,
+      #ad9111,
+      #91830b,
+      #695b09
+    );
+}
+
+.TITANIUM{
+  background-image:
+    linear-gradient(
+      to right bottom,
+      #494949,
+      #474747,
+      #353535,
+      #272727,
+      #181818
+    );
+}
+
+.bankCard__front {
+  padding: 18px;
+  -webkit-transform: rotateY(0);
+  -moz-transform: rotateY(0);
+}
+
+.bankCard__back {
+  padding: 18px 0;
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+}
+
+.bankCard__black-line {
+  margin-top: 5px;
+  height: 38px;
+  background-color: #000000;
+}
+
+.bankCard__logo {
+  height: 30px;
+}
+
+.bankCard__front-logo {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+.bankCard__square {
+  border-radius: 5px;
+  height: 30px;
+}
+
+.bankCard_numer {
+  display: block;
+  width: 100%;
+  word-spacing: 4px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.bankCard__space-75 {
+  width: 75%;
+  float: left;
+}
+
+.bankCard__space-25 {
+  width: 25%;
+  float: left;
+}
+
+.bankCard__label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 1px;
+}
+
+.bankCard__info {
+  margin-bottom: 0;
+  margin-top: 5px;
+  font-size: 16px;
+  line-height: 18px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.bankCard__back-content {
+  padding: 15px 15px 0;
+}
+.bankCard__secret--last {
+  color: #303030;
+  text-align: right;
+  margin: 0;
+  font-size: 14px;
+}
+
+.bankCard__secret {
+  padding: 5px 12px;
+  background-color: #fff;
+  position: relative;
+}
+
+.bankCard__secret:before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  height: calc(100% + 6px);
+  width: calc(100% - 42px);
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ededed,
+    #ededed 5px,
+    #f9f9f9 5px,
+    #f9f9f9 10px
+  );
+}
+
+.bankCard__back-logo {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.bankCard__back-square {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+}
+
+.bankCard:hover .bankCard__front {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+}
+
+.bankCard:hover .bankCard__back {
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(15, 15, 80);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(61, 61, 133);
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input.bg-petrolBlue:hover {
+  background-color: darkslategrey;
+}
+
+.transactionRadioLabel:hover{
+  cursor: pointer;
+  background-color: dimgray;
+}
+
+.activeRadioColor{
+  background-color: rgb(9, 17, 54);
+  color: white;
+}
+
+.activeRadioColor:hover{
+  background-color: rgb(9, 17, 54);
+  color: white;
+  cursor: default;
+}
+
+.switchButton{
+  margin-left: 23%;
+  cursor: pointer;
+}
+
+.slideFromLeft{
+  animation-duration: .25s;
+  animation-name: slideFromLeft;
+}
+
+@Keyframes slideFromLeft{
+  from{
+    margin-right: 200%;
+  }
+  to{
+    margin-right: 0%;
+  }
+}
+
+.slideFromRight{
+  animation-duration: .25s;
+  animation-name: slideFromRight;
+}
+
+@Keyframes slideFromRight{
+  from {
+    margin-left: 200%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}

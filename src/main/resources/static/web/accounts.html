@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/3b00a25a91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="app">
+        
+        <div v-cloak class="container-fluid d-flex flex-column justify-content-between vh-100 p-0">
+            
+            <div class="d-flex flex-column sticky-top">
+                <header class="container-fluid align-items-center bg-lightGray">
+                    <div class="row h-100">
+                        
+                        <div class="col-4 d-none d-lg-flex">
+                            <nav class="d-flex align-items-center">
+                                <a href="#" class="active-link ms-3"><i class="bi-bank2"></i> Accounts</a>
+                                <a href="cards.html" class="color-petrolBlue ms-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                                <a href="loans.html" class="color-petrolBlue ms-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            </nav>
+                        </div>
+                            
+                        <a data-bs-toggle="offcanvas" href="#offcanvasNav" role="button" class="col-2 d-lg-none">
+                            <i class="bi-list color-petrolBlue" style="font-size: 2.5rem;"></i>
+                        </a>
+
+                        <div class="col-10 col-lg-4 d-flex justify-content-end justify-content-lg-center h-75">
+                            <div class="logo-container">
+                                <a href="index.html"><img src="./assets/logo_mhbb.png"></a>
+                            </div> 
+                        </div>
+
+                        <div class="col-4 d-none d-lg-flex justify-content-end">
+                            <div class="me-2 d-flex flex-column justify-content-center">
+                                <div class="dropdown">
+                                    <button class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi-person-fill"></i> <span v-cloak>{{client.firstName}} {{client.lastName}}</span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-petrolBlue">
+                                        <li>
+                                            <div class="d-flex flex-column align-items-center user-dropdown">
+                                                <i class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                                                <strong class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                                                <span class="color-lightGray mb-3">{{client.email}}</span>
+                                                <button v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </header>
+            
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header bg-petrolBlue d-flex justify-content-end">
+                        <a role="button" data-bs-dismiss="offcanvas" href="#offcanvasNav"><i class="bi-x-circle-fill bg-petrolBlue" style="font-size: 2.5rem; color: lightgray;"></i></a>
+                    </div>
+                    <div class="offcanvas-body bg-petrolBlue">
+                        <nav class="d-flex justify-content-around bg-petrolBlue flex-column w-100 align-items-center">
+                            <i class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                            <strong class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                            <span class="color-lightGray mb-3">{{client.email}}</span>
+                            <a href="#" class="active-link mb-3"><i class="bi-bank2"></i> Accounts</a>
+                            <a href="cards.html" class="text-light mb-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                            <a href="loans.html" class="text-light mb-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            <button v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-column flex-grow-1">
+                
+                <div class="mb-4">
+                    <h1 class="text-center mt-4">Welcome <span v-cloak>{{client.firstName}} {{client.lastName}}</span></h1>            
+                    <h3 class="text-center mt-2">Your Accounts</h3>
+                </div>
+
+                <div class="d-flex flex-grow-1 justify-content-center flex-wrap container">
+                    <div v-for="account in accounts" class="card ms-2 me-2 mb-3" style="width: 18rem;">
+                        <div class="card-body bg-lightGray d-flex flex-column align-items-center">
+                            <h5 class="card-title color-petrolBlue">Account <span v-cloak>{{account.number}}</span></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Balance $<span v-cloak>{{account.balance}}</span></h6>
+                            <p class="card-text">Creation date <span v-cloak>{{account.creationDate}}</span></p>
+                            <a :href="'http://localhost:8080/web/account.html?id=' + account.id"><button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="submit">Transaction history</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column align-items-center flex-md-row justify-content-center">
+                    <button v-cloak v-if="3 > accounts.length" v-on:click="addAccount" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" style="width: 16rem;">New Account</button>
+                    <button v-cloak class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded ms-0 ms-md-2 mt-3 mt-md-0" :class="maxAccountsReached" style="width: 16rem;" type="button" data-bs-toggle="modal" data-bs-target="#transactionFormModal">Transfer money</button>
+                </div>
+
+                <div class="modal fade" id="transactionFormModal" tabindex="-1" aria-labelledby="transactionFormModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-lightGray">
+                            <main class="form-signin overflow-hidden">
+                                <div class="d-flex flex-column align-items-center w-100">
+                                    <div class="logo-container mb-4">
+                                        <img src="./assets/logo_mhbb.png">
+                                    </div>
+                                    <h1 class="h3 mb-4 fw-normal text-center">Transaction options</h1>
+                                    <form v-on:change="changeAccountSlide" class="w-100">
+                                        <input type="radio" class="d-none" name="transactionDestinationSelector" value="ownAccounts" id="ownAccountsRadio" checked>
+                                        <label class="col-6 pt-2 pb-2 border-bottom border-dark text-center transactionRadioLabel" :class="ownAccountsSelector" for="ownAccountsRadio">
+                                            Own accounts
+                                        </label>
+                                        <input type="radio" class="d-none" name="transactionDestinationSelector" value="anotherReceiver" id="anotherReceiverRadio">
+                                        <label class="col-6 pt-2 pb-2 border-bottom border-dark text-center transactionRadioLabel" :class="anotherReceiverSelector" for="anotherReceiverRadio">
+                                            Another receiver
+                                        </label>
+                                    </form>
+                                </div>
+
+                                <form class="p-4 d-flex flex-column align-items-center">
+                                    <div v-if="ownAccountsSelector === 'activeRadioColor'" class="col-12" :class="slideLeftOn">
+                                        <div class="col-12 mb-2 w-100">
+                                            <label for="originAccountSelect" class="col-12">
+                                                Select origin account
+                                                <select v-model="originAccount" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="originAccountSelect">
+                                                    <option v-for="account in accounts" :value="account.number">{{account.number}} - ${{account.balance}}</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100">
+                                            <label for="destinationAccountSelect" class="col-12">
+                                                Select destination account
+                                                <select v-model="destinationAccount" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="destinationAccountSelect">
+                                                    <option v-for="account in possibleDestinations" :value="account.number">{{account.number}} - ${{account.balance}}</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100">
+                                            <label for="amountInput" class="col-12">
+                                                Transaction amount
+                                                <input v-model="transactionAmount" type="number" step=".01" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="amountInput">
+                                            </label>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100">
+                                            <label for="detailInput" class="col-12">
+                                                Transaction detail (Not mandatory)
+                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInput">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="anotherReceiverSelector === 'activeRadioColor'" class="col-12" :class="slideRightOn">
+                                        <div class="col-12 mb-2 w-100">
+                                            <label for="originAccountSelectAnother" class="col-12">
+                                                Select origin account
+                                                <select v-model="originAccount" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="originAccountSelectAnother">
+                                                    <option v-for="account in accounts" :value="account.number">{{account.number}} - ${{account.balance}}</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100 d-flex">
+                                            <label for="destinationAccountInput" class="col-7">
+                                                Enter destination account
+                                                <input type="text" v-model="destinationAccount" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="destinationAccountInput">
+                                            </label>
+                                            <button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded ms-2 mt-4 flex-grow-1" type="button" data-bs-toggle="modal" data-bs-target="#frequentAccountsModal">Frequent accounts</button>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100">
+                                            <label for="amountInputAnother" class="col-12">
+                                                Transaction amount
+                                                <input v-model="transactionAmount" type="number" step=".01" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="amountInputAnother">
+                                            </label>
+                                        </div>
+                                        <div class="col-12 mb-3 w-100">
+                                            <label for="detailInputAnother" class="col-12">
+                                                Transaction detail (Not mandatory)
+                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInputAnother">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <p v-if="transactionError !== ''" class="text-danger text-center"><i class="bi-exclamation-circle-fill"></i> {{transactionError}}</p>
+                                    <button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="button" data-bs-toggle="modal" data-bs-target="#acceptTransactionModal">Send</button>
+                                </form>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="acceptTransactionModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-lightGray">
+                          <h5 class="modal-title" id="transactionModalTitle">Transaction summary</h5>
+                        </div>
+                        <div class="modal-body bg-lightGray">
+                          <p v-if="originAccount !== ''" class="text-center">Origin account: {{originAccount}}</p>
+                          <p v-if="destinationAccount !== ''" class="text-center">Destination account: {{destinationAccount}}</p>
+                          <p v-if="transactionAmount !== ''" class="text-center">Amount: ${{transactionAmount}}</p>
+                          <p v-if="transactionDetail !== ''" class="text-center">Transaction detail: {{transactionDetail}}</p>
+                        </div>
+                        <div class="modal-footer bg-lightGray">
+                          <button v-on:click="createTransaction" type="submit" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" data-bs-toggle="modal" data-bs-target="#transactionFormModal">Accept</button>
+                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#transactionFormModal">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="frequentAccountsModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-lightGray">
+                                <h5 class="modal-title" id="frequentAccountsTitle">Frequent destination accounts</h5>
+                            </div>
+                            <div class="modal-body bg-lightGray">
+                                <div class="d-flex flex-column align-items-center">
+                                    <p v-if="frequents.length === 0" class="color-petrolBlue">You do not have clients in your frequents list yet</p>
+                                    <button v-for="frequent in frequents" v-on:click="changeDestination" :value="frequent.number" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded w-100 text-center mb-2" data-bs-toggle="modal" data-bs-target="#transactionFormModal">{{frequent.number}} - {{frequent.ownerName}}</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-lightGray">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#transactionFormModal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-center mt-3 mb-4">Your Loans</h3>
+
+                <div class="d-flex flex-grow-1 justify-content-center flex-wrap container">
+                    <p v-if="loans.length === 0">You do not have any loans</p>
+                    <div v-for="loan in loans" class="card ms-2 me-2 mb-3" style="width: 18rem;">
+                        <div class="card-body bg-petrolBlue d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title color-lightGray mb-2"><span v-cloak>{{loan.loanType}}</span></h5>
+                                <h6 class="card-subtitle color-lightGray mb-2">Loan ID: <span v-cloak>{{loan.id}}</span></h6>
+                                <h6 class="card-subtitle mb-2 text-muted">Amount $<span v-cloak>{{loan.amount}}</span></h6>
+                                <p class="card-text text-light">Payments: <span v-cloak>{{loan.payments}}</span></p>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <i v-if="loan.loanType === 'Mortgage'" class="bi-house-fill color-lightGray loan-icon"></i>
+                                <i v-if="loan.loanType === 'Personal'" class="bi-wallet-fill color-lightGray loan-icon"></i>
+                                <i v-if="loan.loanType === 'Vehicle'" class="fas fa-car color-lightGray loan-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+
+            </div>
+            
+            <footer class="w-100 d-flex flex-column align-items-center p-3 bg-petrolBlue mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start mt-2 mb-2">
+                            <div class="logo-container">
+                                <img src="./assets/logo_mhbb_white.png">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end mt-4 mb-2 mt-lg-2 align-items-center">
+                            <a href="https://www.facebook.com" target="_blank" class="color-lightGray"><i class="bi-facebook m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.instagram.com" target="_blank" class="color-lightGray"><i class="bi-instagram m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.twitter.com" target="_blank" class="color-lightGray"><i class="bi-twitter m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.youtube.com" target="_blank" class="color-lightGray"><i class="bi-youtube m-2" style="font-size: 1.5rem;"></i></a>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center justify-content-lg-start mt-4 mb-2">
+                            <span>
+                                <a href="#" class="link-active me-2">Accounts</a>|
+                                <a href="cards.html" class="color-lightGray ms-2 me-2">Cards</a>|
+                                <a href="loans.html" class="color-lightGray ms-2 me-2">Loans</a>
+                            </span>
+                        </div>
+                        <div class="col-12 col-lg-6 text-center text-lg-start  mt-4 mb-1">
+                            <span class="w-100 text-light">&copy; MindHub Brothers Bank</span>
+                        </div>
+                        <div class="col-6 d-none d-lg-flex justify-content-end align-items-center">
+                            <a href="#" class="color-lightGray"><i class="bi-arrow-up-circle-fill" style="font-size: 2rem;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            
+        </div>    
+        
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./script/accounts.js"></script>
+</body>
+</html>

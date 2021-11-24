@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindhub Brothers Bank - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/3b00a25a91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="app">
+        
+        <div v-cloak class="container-fluid d-flex flex-column justify-content-between vh-100 p-0">
+            
+            <div class="d-flex flex-column sticky-top">
+                <header class="container-fluid align-items-center bg-lightGray">
+                    <div class="row h-100">
+                        
+                        <div class="col-4 d-none d-lg-flex">
+                            <nav v-cloak v-if="loggedIn === true" class="d-flex align-items-center">
+                                <a href="accounts.html" class="color-petrolBlue ms-3"><i class="bi-bank2"></i> Accounts</a>
+                                <a href="cards.html" class="color-petrolBlue ms-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                                <a href="loans.html" class="color-petrolBlue ms-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            </nav>
+                            <div v-cloak v-if="loggedIn === false" class="d-flex align-items-center">
+                                <p class="disabled m-0"><i class="bi-exclamation-circle-fill"></i> Sign In to enable Online Banking features</p>
+                            </div>
+                        </div>
+                            
+                        <a data-bs-toggle="offcanvas" href="#offcanvasNav" role="button" class="col-2 d-lg-none">
+                            <i class="bi-list color-petrolBlue" style="font-size: 2.5rem;"></i>
+                        </a>
+
+                        <div class="col-10 col-lg-4 d-flex justify-content-end justify-content-lg-center h-75">
+                            <div class="logo-container">
+                                <a href="#"><img src="./assets/logo_mhbb.png"></a>
+                            </div> 
+                        </div>
+                        
+                        <div v-cloak v-if="loggedIn === false" class="col-4 d-none d-lg-flex justify-content-end">
+                            <div class="me-2 d-flex align-items-center justify-content-end">
+                                <button type="button" class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
+                                <button type="button" class="color-lightGray bg-dimBlue ps-3 pe-3 pt-2 pb-2 ms-2 border-0 rounded" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
+                            </div>
+                        </div>
+
+                        <div v-cloak v-if="loggedIn === true" class="col-4 d-none d-lg-flex justify-content-end">
+                            <div class="me-2 d-flex flex-column justify-content-center">
+                                <div class="dropdown">
+                                    <button class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi-person-fill"></i> <span v-cloak>{{client.firstName}} {{client.lastName}}</span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-petrolBlue">
+                                        <li>
+                                            <div class="d-flex flex-column align-items-center user-dropdown">
+                                                <i class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                                                <strong class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                                                <span class="color-lightGray mb-3">{{client.email}}</span>
+                                                <button v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </header>
+            
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header bg-petrolBlue d-flex justify-content-end">
+                        <a role="button" data-bs-dismiss="offcanvas" href="#offcanvasNav"><i class="bi-x-circle-fill bg-petrolBlue" style="font-size: 2.5rem; color: lightgray;"></i></a>
+                    </div>
+                    <div class="offcanvas-body bg-petrolBlue">
+                        <nav class="d-flex justify-content-around bg-petrolBlue flex-column w-100 align-items-center">
+                            <div v-if="loggedIn === false" class="d-flex mb-3">
+                                <button type="button" class="color-petrolBlue bg-lightGray ps-3 pe-3 pt-2 pb-2  border-0 rounded" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
+                                <button type="button" class="color-petrolBlue bg-lightGray ps-3 pe-3 pt-2 pb-2 ms-2 border-0 rounded" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
+                            </div>
+                            <i v-if="loggedIn === true" class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                            <strong v-if="loggedIn === true" class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                            <span v-if="loggedIn === true" class="color-lightGray mb-3">{{client.email}}</span>
+                            <a v-if="loggedIn === true" href="accounts.html" class="text-light mb-3"><i class="bi-bank2"></i> Accounts</a>
+                            <a v-if="loggedIn === true" href="cards.html" class="text-light mb-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                            <a v-if="loggedIn === true" href="loans.html" class="text-light mb-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            <div v-if="loggedIn === false" class="d-flex align-items-center">
+                                <p class="disabled m-0"><i class="bi-exclamation-circle-fill"></i> Sign In to enable Online Banking features</p>
+                            </div>
+                            <button v-if="loggedIn === true" v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-lightGray">
+                        <main class="form-signin">
+                            <form v-on:submit.prevent="logIn" class="p-4 d-flex flex-column align-items-center">
+                                <div class="logo-container mb-4">
+                                    <img src="./assets/logo_mhbb.png">
+                                </div>
+                                <h1 class="h3 mb-4 fw-normal text-center">Please sign in</h1>
+                      
+                                <div class="form-floating mb-2 w-100">
+                                    <input v-model="formEmail" type="email" class="form-control" id="floatingEmailSignIn" placeholder="name@example.com" required>
+                                    <label for="floatingEmailSignIn">Email address</label>
+                                </div>
+                                <div class="form-floating mb-3 w-100">
+                                    <input v-model="formPassword" type="password" class="form-control" id="floatingPasswordSignIn" placeholder="Password" required>
+                                    <label for="floatingPasswordSignIn">Password</label>
+                                </div>
+
+                                <p v-if="logInErrorMessage !== ''" class="text-danger"><i class="bi-exclamation-circle-fill"></i> {{logInErrorMessage}}</p>
+                                <button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="submit">Sign In</button>
+                            </form>
+                        </main>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-lightGray">
+                        <main class="form-signin">
+                            <form v-on:submit.prevent="signUp" class="p-4 d-flex flex-column align-items-center">
+                                <div class="logo-container mb-4">
+                                    <img src="./assets/logo_mhbb.png">
+                                </div>
+                                <h1 class="h3 mb-4 fw-normal text-center">Registration form</h1>
+                      
+                                <div class="form-floating mb-2 w-100">
+                                    <input v-model="signUpFirstName" type="text" class="form-control" id="floatingFirstNameSignUp" placeholder="John" required>
+                                    <label for="floatingFirstNameSignUp">First Name</label>
+                                </div>
+                                <div class="form-floating mb-2 w-100">
+                                    <input v-model="signUpLastName" type="text" class="form-control" id="floatingLastNameSignUp" placeholder="Doe" required>
+                                    <label for="floatingLastNameSignUp">Last Name</label>
+                                </div>
+                                <div class="form-floating mb-2 w-100">
+                                    <input v-model="signUpEmail" type="email" class="form-control" id="floatingEmailSignUp" placeholder="name@example.com" required>
+                                    <label for="floatingEmailSignUp">Email address</label>
+                                </div>
+                                <div class="form-floating mb-3 w-100">
+                                    <input v-model="signUpPassword" type="password" class="form-control" id="floatingPasswordSignUp" placeholder="Password" required>
+                                    <label for="floatingPasswordSignUp">Password</label>
+                                </div>
+
+                                <p v-if="signUpErrorMessage !== ''" class="text-danger"><i class="bi-exclamation-circle-fill"></i> {{signUpErrorMessage}}</p>
+                                <button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="submit">Sign Up</button>
+                            </form>
+                        </main>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-column flex-grow-1">
+                
+                <div class="container-fluid d-none d-lg-block">
+                    <div class="row">
+                        <div class="col-12 d-block p-0">
+                            <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <div class="carousel-container">
+                                        <img src="./assets/carousel-loan.png" class="d-block opacity-75">
+                                    </div>
+                                    <div class="carousel-caption">
+                                      <h5 class="color-petrolBlue">Apply for your loan today</h5>
+                                      <p>Loan will be ready for you to use within 24 hours during weekdays if you meet the conditions.</p>
+                                    </div>
+                                  </div>
+                                  <div class="carousel-item">
+                                    <div class="carousel-container">
+                                        <img src="./assets/carousel-discounts.jpg" class="d-block opacity-75">
+                                    </div>
+                                    <div class="carousel-caption d-flex flex-column">
+                                      <h5 class="color-petrolBlue">Get a credit card</h5>
+                                      <p>Start enjoying the incredible discounts in thousands of products and services today.</p>
+                                    </div>
+                                  </div>
+                                  <div class="carousel-item">
+                                    <div class="carousel-container">
+                                        <img src="./assets/carousel-homebanking.jpg" class="d-block opacity-75">
+                                    </div>
+                                    <div class="carousel-caption align-self-start">
+                                      <h5 class="color-petrolBlue">Sign on now and get your account</h5>
+                                      <p>Start experiencing te benefits and comfort of having a Mindhub Brothers Bank account.</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid d-block d-lg-none p-0 overflow-hidden">
+                    <div class="carousel-container">
+                        <img src="./assets/carousel-loan.png" class="d-block w-100">
+                    </div>
+                    <h5 class="color-petrolBlue text-center mt-3">Apply for your loan today</h5>
+                    <p class="text-center ps-2 pe-2">Loan will be ready for you to use within 24 hours during weekdays if you meet the conditions.</p>
+                    <div class="carousel-container">
+                        <img src="./assets/carousel-discounts.jpg" class="d-block w-100">
+                    </div>
+                    <h5 class="color-petrolBlue text-center mt-3">Get a credit card</h5>
+                    <p class="text-center ps-2 pe-2">Start enjoying the incredible discounts in thousands of products and services today.</p>
+                    <div class="carousel-container">
+                        <img src="./assets/carousel-homebanking.jpg" class="d-block w-100">
+                    </div>
+                    <h5 class="color-petrolBlue text-center mt-3">Sign on now and get your account</h5>
+                    <p class="text-center ps-2 pe-2">Start experiencing te benefits and comfort of having a Mindhub Brothers Bank account.</p>
+                </div>
+
+                
+
+                <div class="container-fluid m-0 p-0 mt-4">
+                        <div class="col-10 offset-1 offset-lg-4 col-lg-4 p-0 bg-lightGray rounded">
+                            <h2 class="color-petrolBlue text-center">Exchange rate calculator</h2>
+                            <div v-cloak class="ms-4" v-if="exchangeRate !== 0">
+                                <p>{{calculatorUpperBody.amount}} {{calculatorUpperBody.from}} equals:</p>
+                                <h3>{{calculatorUpperBody.rate}} {{calculatorUpperBody.to}}</h3>
+                            </div>
+                            <form v-on:submit.prevent="getExchangeRate">
+                                <div class="d-flex justify-content-around mb-2">
+                                    <label class="col-2">
+                                        <input class="col-12 border-start-0 border-end-0 border-top-0 border-primary bg-lightGray" type="number" min="0,01" step="any" v-model="currencyAmount" required>
+                                    </label>
+                                    <label v-cloak class="col-8">
+                                        <select class="col-12 border-start-0 border-end-0 border-top-0 border-primary bg-lightGray" name="currencyListFrom" v-model="convertFrom">
+                                            <option v-for="currency in currencyList" :value="currency.id">{{currency.currencyName}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div>
+                                    <i v-on:click="switchCurrencies" class="bi-arrow-down-up switchButton" style="font-size: 1.2rem; color: rgb(14, 14, 43);"></i>
+                                </div>
+                                <div class="d-flex justify-content-around mb-2">
+                                    <label class="col-2">
+                                        <input class="col-12 border-start-0 border-end-0 border-top-0 border-primary bg-lightGray" type="number" v-model="exchangeRate" readonly>
+                                    </label>
+                                    <label v-cloak class="col-8">
+                                        <select class="col-12 border-start-0 border-end-0 border-top-0 border-primary bg-lightGray" name="currencyListTo" v-model="convertTo">
+                                            <option v-for="currency in currencyList" :value="currency.id">{{currency.currencyName}}</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <button class="col-4 offset-4 bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded mb-3">Calculate</button>
+                            </form>
+                        </div>
+                </div>
+                    
+            
+
+            </div>
+            
+            <footer class="w-100 d-flex flex-column align-items-center p-3 bg-petrolBlue mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start mt-2 mb-2">
+                            <div class="logo-container">
+                                <img src="./assets/logo_mhbb_white.png">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end mt-4 mb-2 mt-lg-2 align-items-center">
+                            <a href="https://www.facebook.com" target="_blank" class="color-lightGray"><i class="bi-facebook m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.instagram.com" target="_blank" class="color-lightGray"><i class="bi-instagram m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.twitter.com" target="_blank" class="color-lightGray"><i class="bi-twitter m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.youtube.com" target="_blank" class="color-lightGray"><i class="bi-youtube m-2" style="font-size: 1.5rem;"></i></a>
+                        </div>
+                        <div v-cloak v-if="loggedIn === true" class="col-12 d-flex justify-content-center justify-content-lg-start mt-4 mb-2">
+                            <span>
+                                <a href="accounts.html" class="color-lightGray me-2">Accounts</a>|
+                                <a href="cards.html" class="color-lightGray ms-2 me-2">Cards</a>|
+                                <a href="loans.html" class="color-lightGray ms-2 me-2">Loans</a>
+                            </span>
+                        </div>
+                        <div class="col-12 col-lg-6 text-center text-lg-start  mt-4 mb-1">
+                            <span class="w-100 text-light">&copy; MindHub Brothers Bank</span>
+                        </div>
+                        <div class="col-6 d-none d-lg-flex justify-content-end align-items-center">
+                            <a href="#" class="color-lightGray"><i class="bi-arrow-up-circle-fill" style="font-size: 2rem;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            
+        </div>    
+        
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./script/index.js"></script>
+</body>
+</html>

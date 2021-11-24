@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/3b00a25a91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="app">
+        
+        <div v-cloak class="container-fluid d-flex flex-column justify-content-between vh-100 p-0">
+            
+            <div class="d-flex flex-column sticky-top">
+                <header class="container-fluid align-items-center bg-lightGray">
+                    <div class="row h-100">
+                        
+                        <div class="col-4 d-none d-lg-flex">
+                            <nav class="d-flex align-items-center">
+                                <a href="accounts.html" class="color-petrolBlue ms-3"><i class="bi-bank2"></i> Accounts</a>
+                                <a href="#" class="link-active ms-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                                <a href="loans.html" class="color-petrolBlue ms-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            </nav>
+                        </div>
+                            
+                        <a data-bs-toggle="offcanvas" href="#offcanvasNav" role="button" class="col-2 d-lg-none">
+                            <i class="bi-list color-petrolBlue" style="font-size: 2.5rem;"></i>
+                        </a>
+
+                        <div class="col-10 col-lg-4 d-flex justify-content-end justify-content-lg-center h-75">
+                            <div class="logo-container">
+                                <a href="index.html"><img src="./assets/logo_mhbb.png"></a>
+                            </div> 
+                        </div>
+
+                        <div class="col-4 d-none d-lg-flex justify-content-end">
+                            <div class="me-2 d-flex flex-column justify-content-center">
+                                <div class="dropdown">
+                                    <button class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi-person-fill"></i> <span v-cloak>{{client.firstName}} {{client.lastName}}</span>
+                                    </button>
+                                    <ul class="dropdown-menu bg-petrolBlue">
+                                        <li>
+                                            <div class="d-flex flex-column align-items-center user-dropdown">
+                                                <i class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                                                <strong class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                                                <span class="color-lightGray mb-3">{{client.email}}</span>
+                                                <button v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </header>
+            
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header bg-petrolBlue d-flex justify-content-end">
+                        <a role="button" data-bs-dismiss="offcanvas" href="#offcanvasNav"><i class="bi-x-circle-fill bg-petrolBlue" style="font-size: 2.5rem; color: lightgray;"></i></a>
+                    </div>
+                    <div class="offcanvas-body bg-petrolBlue">
+                        <nav class="d-flex justify-content-around bg-petrolBlue flex-column w-100 align-items-center">
+                            <i class="bi-person-circle profile-pic color-lightGray mb-2"></i>
+                            <strong class="color-lightGray mb-1">{{client.firstName}} {{client.lastName}}</strong>
+                            <span class="color-lightGray mb-3">{{client.email}}</span>
+                            <a href="accounts.html" class="text-light mb-3"><i class="bi-bank2"></i> Accounts</a>
+                            <a href="#" class="link-active mb-3"><i class="bi-credit-card-fill"></i> Cards</a>
+                            <a href="loans.html" class="text-light mb-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                            <button v-on:click="logOut" class="btn btn-danger mb-2">Sign Out</button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-column flex-grow-1">
+                <div v-if="creditCards.length + debitCards.length === 0" class="mb-4">
+                    <h1 class="text-center mt-4">You do not have any cards yet</h1>
+                </div>
+
+                <div v-if="creditCards.length + debitCards.length !== 0" class="mb-4">
+                    <h1 class="text-center mt-4">Your Cards</h1>            
+                </div>
+
+                <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-column col-12 col-lg-4 offset-lg-2 align-items-center">
+                        <h2 v-if="creditCards.length + debitCards.length !== 0">Credit Cards</h2>
+                        <p v-if="creditCards.length === 0 && creditCards.length + debitCards.length !== 0">You do not have any credit cards</p>
+                        <div v-cloak v-for="creditCard in creditCards" class="bankCard m-2">
+                            <div class="bankCard__front bankCard__part" v-bind:class="creditCard.cardColor">
+                                <img class="bankCard__front-square bankCard__square" src="./assets/visa.png">
+                                <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                <p class="bankCard_numer">{{creditCard.number}}</p>
+                                <div class="bankCard__space-75">
+                                    <span class="bankCard__label">Card holder</span>
+                                    <p class="bankCard__info">{{creditCard.cardholder}}</p>
+                                </div>
+                                <div class="bankCard__space-25">
+                                    <span class="bankCard__label">Expires</span>
+                                    <p class="bankCard__info">{{creditCard.thruDate}}</p>
+                                </div>
+                            </div>
+                    
+                            <div class="bankCard__back bankCard__part" v-bind:class="creditCard.cardColor">
+                                <div class="bankCard__black-line"></div>
+                                <div class="bankCard__back-content">
+                                    <div class="bankCard__secret">
+                                        <p class="bankCard__secret--last">{{creditCard.cvv}}</p>
+                                    </div>
+                                    <img class="bankCard__back-square bankCard__square" src="./assets/visa.png">
+                                    <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column col-12 col-lg-4 align-items-center">
+                        <h2 v-if="creditCards.length + debitCards.length !== 0">Debit Cards</h2>
+                        <p v-if="debitCards.length === 0 && creditCards.length + debitCards.length !== 0">You do not have any debit cards</p>
+                        <div v-cloak v-for="debitCard in debitCards" class="bankCard m-2">
+                            <div class="bankCard__front bankCard__part" v-bind:class="debitCard.cardColor">
+                                <img class="bankCard__front-square bankCard__square" src="./assets/visa-debito.png">
+                                <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                <p class="bankCard_numer">{{debitCard.number}}</p>
+                                <div class="bankCard__space-75">
+                                    <span class="bankCard__label">Card holder</span>
+                                    <p class="bankCard__info">{{debitCard.cardholder}}</p>
+                                </div>
+                                <div class="bankCard__space-25">
+                                    <span class="bankCard__label">Expires</span>
+                                    <p class="bankCard__info">{{debitCard.thruDate}}</p>
+                                </div>
+                            </div>
+                    
+                            <div class="bankCard__back bankCard__part" v-bind:class="debitCard.cardColor">
+                                <div class="bankCard__black-line"></div>
+                                <div class="bankCard__back-content">
+                                    <div class="bankCard__secret">
+                                        <p class="bankCard__secret--last">{{debitCard.cvv}}</p>
+                                    </div>
+                                    <img class="bankCard__back-square bankCard__square" src="./assets/visa-debito.png">
+                                    <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button v-cloak v-if="6 > creditCards.length + debitCards.length" type="button" class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded mt-4" data-bs-toggle="modal" data-bs-target="#cardCreationModal" style="width: 16rem;">New Card</button>
+                </div>
+            
+
+                <div class="modal fade" id="cardCreationModal" tabindex="-1" aria-labelledby="cardCreationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-lightGray">
+                            <main class="form-signin">
+                                <form v-on:submit.prevent="createCard" class="p-4 d-flex flex-column align-items-center">
+                                    <div class="logo-container mb-4">
+                                        <img src="./assets/logo_mhbb.png">
+                                    </div>
+                                    <h1 class="h3 mb-4 fw-normal text-center">Select your new Card</h1>
+                          
+                                    <div class="col-12 mb-2 w-100">
+                                        <label for="typeSelect" class="col-12">
+                                            Select card type
+                                            <select v-model="cardType" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="typeSelect" required>
+                                                <option disabled>Card Type</option>
+                                                <option value="CREDIT">Credit</option>
+                                                <option value="DEBIT">Debit</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 mb-3 w-100">
+                                        <label for="colorSelect" class="col-12">
+                                            Select card color
+                                            <select v-model="cardColor" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="colorSelect" required>
+                                                <option disabled>Card Color</option>
+                                                <option value="SILVER">Silver</option>
+                                                <option value="GOLD">Gold</option>
+                                                <option value="TITANIUM">Titanium</option>
+                                            </select>
+                                        </label>
+                                    </div>
+    
+                                    <p v-if="cardCreationErrorMessage !== ''" class="text-danger"><i class="bi-exclamation-circle-fill"></i> {{cardCreationErrorMessage}}</p>
+                                    <input v-cloak v-if="isDisabled === false" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="submit" value="Create"></input>
+                                    <p v-cloak v-if="isDisabled === true" class="disabled"><i class="bi-exclamation-circle-fill"></i> All fields must have a valid option selected</p>
+                                </form>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <footer class="w-100 d-flex flex-column align-items-center p-3 bg-petrolBlue mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-start mt-2 mb-2">
+                            <div class="logo-container">
+                                <img src="./assets/logo_mhbb_white.png">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end mt-4 mb-2 mt-lg-2 align-items-center">
+                            <a href="https://www.facebook.com" target="_blank" class="color-lightGray"><i class="bi-facebook m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.instagram.com" target="_blank" class="color-lightGray"><i class="bi-instagram m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.twitter.com" target="_blank" class="color-lightGray"><i class="bi-twitter m-2" style="font-size: 1.5rem;"></i></a>
+                            <a href="https://www.youtube.com" target="_blank" class="color-lightGray"><i class="bi-youtube m-2" style="font-size: 1.5rem;"></i></a>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center justify-content-lg-start mt-4 mb-2">
+                            <span>
+                                <a href="accounts.html" class="color-lightGray me-2">Accounts</a>|
+                                <a href="#" class="link-active ms-2 me-2">Cards</a>|
+                                <a href="loans.html" class="color-lightGray ms-2 me-2">Loans</a>
+                            </span>
+                        </div>
+                        <div class="col-12 col-lg-6 text-center text-lg-start  mt-4 mb-1">
+                            <span class="w-100 text-light">&copy; MindHub Brothers Bank</span>
+                        </div>
+                        <div class="col-6 d-none d-lg-flex justify-content-end align-items-center">
+                            <a href="#" class="color-lightGray"><i class="bi-arrow-up-circle-fill" style="font-size: 2rem;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            
+        </div>    
+        
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./script/cards.js"></script>
+</body>
+</html>
