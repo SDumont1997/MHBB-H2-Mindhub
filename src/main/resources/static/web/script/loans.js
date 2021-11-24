@@ -32,6 +32,8 @@ const app = Vue.createApp({
             axios.get("/api/loans")
             .then(response => {
                 this.loans = this.sortById(response.data)
+            }).catch(e => {
+                console.log(e)
             })
         },
         sortById(array){
