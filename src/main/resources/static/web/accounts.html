@@ -22,9 +22,9 @@
                         
                         <div class="col-4 d-none d-lg-flex">
                             <nav class="d-flex align-items-center">
-                                <a href="#" class="active-link ms-3"><i class="bi-bank2"></i> Accounts</a>
-                                <a href="cards.html" class="color-petrolBlue ms-3"><i class="bi-credit-card-fill"></i> Cards</a>
-                                <a href="loans.html" class="color-petrolBlue ms-3"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                                <a href="#" class="active-link ms-3" style="font-size: 1.2rem;"><i class="bi-bank2"></i> Accounts</a>
+                                <a href="cards.html" class="color-petrolBlue ms-3" style="font-size: 1.2rem;"><i class="bi-credit-card-fill"></i> Cards</a>
+                                <a href="loans.html" class="color-petrolBlue ms-3" style="font-size: 1.2rem;"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                             </nav>
                         </div>
                             
@@ -152,7 +152,7 @@
                                         <div class="col-12 mb-3 w-100">
                                             <label for="detailInput" class="col-12">
                                                 Transaction detail (Not mandatory)
-                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInput">
+                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInput" maxlength="30">
                                             </label>
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@
                                         <div class="col-12 mb-3 w-100">
                                             <label for="detailInputAnother" class="col-12">
                                                 Transaction detail (Not mandatory)
-                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInputAnother">
+                                                <input v-model="transactionDetail" type="text" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="detailInputAnother" maxlength="30">
                                             </label>
                                         </div>
                                     </div>
