@@ -9,6 +9,7 @@ const app = Vue.createApp({
     },
     created(){
         this.loadData()
+        console.log(this.transactions.length)
     },
     methods: {
         loadData(){
