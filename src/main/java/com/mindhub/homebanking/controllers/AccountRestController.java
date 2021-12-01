@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -55,7 +56,7 @@ public class AccountRestController {
     }
 
     @PostMapping("/clients/current/accounts")
-    public ResponseEntity<Object> registerAccount(Authentication authentication){
+    public ResponseEntity<Object> registerAccount(Authentication authentication, @RequestParam AccountType type){
         if (clientService.getByEmail(authentication.getName()).getAccounts().size() >= 3){
             return new ResponseEntity<>("Maximum number of accounts reached", HttpStatus.FORBIDDEN);
         }
@@ -63,7 +64,7 @@ public class AccountRestController {
         while(accountService.getByNumber(accountNumber) != null){
             accountNumber = "MHB-" + getRandomNumber(1, 99999999);
         }
-        accountService.save(new Account(clientService.getByEmail(authentication.getName()), accountNumber, 0));
+        accountService.save(new Account(clientService.getByEmail(authentication.getName()), accountNumber, 0, type));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

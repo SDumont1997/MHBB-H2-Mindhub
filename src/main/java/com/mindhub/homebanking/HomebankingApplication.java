@@ -26,16 +26,16 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return args -> 	{
-			Loan mortgage = new Loan("Mortgage", 500000.00, new ArrayList<>(){{add(12); add(24); add(36); add(48); add(60);}});
+			Loan mortgage = new Loan("Mortgage", 500000.00, new ArrayList<>(){{add(12); add(24); add(36); add(48); add(60);}}, 15.00);
 			loanRepository.save(mortgage);
-			Loan personal = new Loan("Personal", 100000.00, new ArrayList<>(){{add(6); add(12); add(24);}});
+			Loan personal = new Loan("Personal", 100000.00, new ArrayList<>(){{add(6); add(12); add(24);}}, 30.00);
 			loanRepository.save(personal);
-			Loan vehicle = new Loan("Vehicle", 300000.00, new ArrayList<>(){{add(6); add(12); add(24); add(36);}});
+			Loan vehicle = new Loan("Vehicle", 300000.00, new ArrayList<>(){{add(6); add(12); add(24); add(36);}}, 25.00);
 			loanRepository.save(vehicle);
 
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba1234"));
 			clientRepository.save(client1);
-			Account account1 = new Account(client1, "MHB-1", 5000.00);
+			Account account1 = new Account(client1, "MHB-1", 5000.00, AccountType.SAVINGS);
 			accountRepository.save(account1);
 			Transaction transaction1 = new Transaction(account1, TransactionType.DEBIT, 5000.00, "MHB003 - Santiago Dumont");
 			transactionRepository.save(transaction1);
@@ -43,7 +43,7 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction2);
 			Transaction transaction3 = new Transaction(account1, TransactionType.CREDIT, 5000.00, "MHB003 - Santiago Dumont");
 			transactionRepository.save(transaction3);
-			Account account2 = new Account(client1, "MHB-2", 7500.00);
+			Account account2 = new Account(client1, "MHB-2", 7500.00, AccountType.CHECKING);
 			accountRepository.save(account2);
 			Transaction transaction4 = new Transaction(account2, TransactionType.CREDIT, 3200.00, "MHB004 - Santiago Dumont");
 			transactionRepository.save(transaction4);
@@ -53,14 +53,14 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan1);
 			ClientLoan clientLoan2 = new ClientLoan(50000.00, 12, client1, personal);
 			clientLoanRepository.save(clientLoan2);
-			Card card1 = new Card(client1, CardType.DEBIT, CardColor.GOLD, "4563 8000 7465 9784", 772, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card card1 = new Card(client1, CardType.DEBIT, CardColor.GOLD, "4563 8000 7465 9784", 772, LocalDate.now().minusYears(6), LocalDate.now().minusYears(1));
 			cardRepository.save(card1);
 			Card card2 = new Card(client1, CardType.CREDIT, CardColor.TITANIUM, "7705 7834 5500 3214", 238, LocalDate.now(), LocalDate.now().plusYears(5));
 			cardRepository.save(card2);
 
 			Client client2 = new Client("Santiago", "Dumont", "sdumont@gmail.com", passwordEncoder.encode("santiago1234"));
 			clientRepository.save(client2);
-			Account account3 = new Account(client2, "MHB-3", 8000.00);
+			Account account3 = new Account(client2, "MHB-3", 8000.00, AccountType.SAVINGS);
 			accountRepository.save(account3);
 			Transaction transaction6 = new Transaction(account3, TransactionType.CREDIT, 5000.00, "MHB001 - Melba Morel");
 			transactionRepository.save(transaction6);
@@ -68,7 +68,7 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction7);
 			Transaction transaction8 = new Transaction(account3, TransactionType.CREDIT, 4000.00, "MHB002 - Melba Morel");
 			transactionRepository.save(transaction8);
-			Account account4 = new Account(client2, "MHB-4", 10000.00);
+			Account account4 = new Account(client2, "MHB-4", 10000.00, AccountType.CHECKING);
 			accountRepository.save(account4);
 			Transaction transaction9 = new Transaction(account4, TransactionType.DEBIT, 2700.00, "MHB001 - Melba Morel");
 			transactionRepository.save(transaction9);

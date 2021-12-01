@@ -10,7 +10,7 @@ public class LoanApplicationDTO {
 
     }
 
-    public LoanApplicationDTO(Long loanId, double loanAmount, Integer payments, String destinationAccountNumber){
+    public LoanApplicationDTO(Long loanId, double loanAmount, Integer payments, Double interest, String destinationAccountNumber){
         this.loanId = loanId;
         this.loanAmount = loanAmount;
         this.payments = payments;

@@ -100,8 +100,9 @@
                                     <tr>
                                         <th class="col-3">Transaction date</th>
                                         <th class="col-1 text-center">Amount</th>
-                                        <th class="col-5 text-center">Origin/ Destination Account</th>
-                                        <th class="col-3 text-center">Detail</th>
+                                        <th class="col-4 text-center">Origin/ Destination Account</th>
+                                        <th class="col-2 text-center">Account balance</th>
+                                        <th class="col-2 text-center">Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -109,9 +110,10 @@
                                         <td v-cloak class="color-petrolBlue border-0 col-3">{{transaction.dateTime}}</td>
                                         <td v-if="transaction.type === 'CREDIT'" v-cloak class="td-credit border-0 col-1 text-center">+${{transaction.amount}}</td>
                                         <td v-else v-cloak class="td-debit border-0 col-1 text-center">-${{transaction.amount}}</td>
-                                        <td v-cloak class="color-petrolBlue border-0 col-5 text-center">{{transaction.otherPart}}</td>
-                                        <td v-if="transaction.detail === null" v-cloak class="color-petrolBlue border-0 col-3 text-center">-</td>
-                                        <td v-else v-cloak class="color-petrolBlue border-0 col-3 text-center">{{transaction.detail}}</td>
+                                        <td v-cloak class="color-petrolBlue border-0 col-4 text-center">{{transaction.otherPart}}</td>
+                                        <td v-cloak class="color-petrolBlue border-0 col-2 text-center">${{transaction.accountState}}</td>
+                                        <td v-if="transaction.detail === null" v-cloak class="color-petrolBlue border-0 col-2 text-center">-</td>
+                                        <td v-else v-cloak class="color-petrolBlue border-0 col-2 text-center">{{transaction.detail}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -134,6 +136,7 @@
                     <div class="accordion-body">
                         <p>Date: {{transaction.dateTime}}</p>
                         <p>Origin/Destination Account: {{transaction.otherPart}}</p>
+                        <p>Account balance: ${{transaction.accountState}}</p>
                         <p v-if="transaction.detail === null">Detail: -</p>
                         <p v-else>Detail: {{transaction.detail}}</p>
                     </div>

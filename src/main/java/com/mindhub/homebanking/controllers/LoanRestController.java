@@ -69,11 +69,12 @@ public class LoanRestController {
         if (!accountService.getByNumber(loanApplicationDTO.getDestinationAccountNumber()).getOwner().equals(clientService.getByEmail(authentication.getName()))){
             return new ResponseEntity<>("Destination account does not belong to current user", HttpStatus.FORBIDDEN);
         }
-        double interests = loanApplicationDTO.getLoanAmount()/5;
-        double amount = loanApplicationDTO.getLoanAmount() + interests;
+
         Client client = clientService.getByEmail(authentication.getName());
         Loan loan = loanService.getById(loanApplicationDTO.getLoanId());
         Account account = accountService.getByNumber(loanApplicationDTO.getDestinationAccountNumber());
+        Double interests = loanApplicationDTO.getLoanAmount() / 100 * loan.getInterest();
+        Double amount = loanApplicationDTO.getLoanAmount() + interests;
         clientLoanService.save(new ClientLoan(amount, loanApplicationDTO.getPayments(), client, loan));
         loanService.save(loan);
         transactionService.save(new Transaction(account, TransactionType.CREDIT, loanApplicationDTO.getLoanAmount(), "Mindhub Brothers Bank", "Loan approved"));

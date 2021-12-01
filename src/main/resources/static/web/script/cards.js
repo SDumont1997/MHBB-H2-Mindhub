@@ -6,7 +6,10 @@ const app = Vue.createApp({
             debitCards: [],
             cardType: "Card Type",
             cardColor: "Card Color",
-            cardCreationErrorMessage: ""
+            cardCreationErrorMessage: "",
+            cardNumber: "",
+            password: "",
+            cardDeletionError: ""
         }
     },
     created(){
@@ -50,6 +53,14 @@ const app = Vue.createApp({
             .catch(error => {
                 this.cardCreationErrorMessage = error.response.data
             })
+        },
+        setErasedCard(event){
+            this.cardNumber = event.target.value
+        },
+        deleteCard(){
+            axios.post("/api/clients/current/cards/delete", `cardNumber=${this.cardNumber}&password=${this.password}`)
+            .then(response=> window.location.reload())
+            .catch(error => this.cardDeletionError = error.response.data)
         }
     },
     computed: {
@@ -62,4 +73,4 @@ const app = Vue.createApp({
     }
 })
 
-app.mount("#app")
+let asd = app.mount("#app")

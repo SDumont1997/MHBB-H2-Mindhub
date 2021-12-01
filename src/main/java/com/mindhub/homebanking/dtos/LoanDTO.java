@@ -9,6 +9,7 @@ public class LoanDTO {
     private String name;
     private double maxAmount;
     private List<Integer> payments;
+    private Double interest;
 
     public LoanDTO(){
 
@@ -19,6 +20,7 @@ public class LoanDTO {
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();
         this.payments = loan.getPayments();
+        this.interest = loan.getInterest();
     }
 
     public Long getId() {
@@ -53,6 +55,14 @@ public class LoanDTO {
         this.payments = payments;
     }
 
+    public Double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(Double interest) {
+        this.interest = interest;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LoanDTO{");
@@ -60,6 +70,7 @@ public class LoanDTO {
         sb.append(", name='").append(name).append('\'');
         sb.append(", maxAmount=").append(maxAmount);
         sb.append(", payments=").append(payments);
+        sb.append(", interest=").append(interest);
         sb.append('}');
         return sb.toString();
     }

@@ -18,6 +18,7 @@ public class Account {
     private String number;
     private String creationDate;
     private double balance;
+    private AccountType type;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
@@ -31,10 +32,11 @@ public class Account {
 
     }
 
-    public Account(Client owner, String number, double balance) {
+    public Account(Client owner, String number, double balance, AccountType type) {
         this.number = number;
         this.creationDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.balance = balance;
+        this.type = type;
         owner.addAccount(this);
     }
 
@@ -83,11 +85,20 @@ public class Account {
         transactions.add(transaction);
     }
 
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Account{");
         sb.append("id=").append(id);
         sb.append(", number='").append(number).append('\'');
+        sb.append(", type=").append(type).append('\'');
         sb.append(", creationDate='").append(creationDate).append('\'');
         sb.append(", balance=").append(balance);
         sb.append(", owner=").append(owner);

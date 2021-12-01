@@ -16,6 +16,8 @@ public class CardDTO {
     private Integer cvv;
     private String fromDate;
     private String thruDate;
+    private boolean isExpired;
+    private String expiredClass;
 
     public CardDTO(){
 
@@ -28,8 +30,15 @@ public class CardDTO {
         this.cardColor = card.getCardColor();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
-        this.fromDate = card.getFromDate();
-        this.thruDate = card.getThruDate();
+        this.fromDate = card.getFromDate().format(DateTimeFormatter.ofPattern("MM/yy"));
+        this.thruDate = card.getThruDate().format(DateTimeFormatter.ofPattern("MM/yy"));
+        if (card.getThruDate().isBefore(LocalDate.now())){
+            this.isExpired = true;
+            this.expiredClass = "expiredCard";
+        } else {
+            this.isExpired = false;
+            this.expiredClass = "";
+        }
     }
 
     public Long getId() {
@@ -94,6 +103,22 @@ public class CardDTO {
 
     public void setThruDate(LocalDate thruDate) {
         this.thruDate = thruDate.format(DateTimeFormatter.ofPattern("MM/yy"));
+    }
+
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
+    }
+
+    public String getExpiredClass() {
+        return expiredClass;
+    }
+
+    public void setExpiredClass(String expiredClass) {
+        this.expiredClass = expiredClass;
     }
 
     @Override

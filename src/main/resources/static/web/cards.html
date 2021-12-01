@@ -94,65 +94,94 @@
                     <div class="d-flex flex-column col-12 col-lg-4 offset-lg-2 align-items-center">
                         <h2 v-if="creditCards.length + debitCards.length !== 0">Credit Cards</h2>
                         <p v-if="creditCards.length === 0 && creditCards.length + debitCards.length !== 0">You do not have any credit cards</p>
-                        <div v-cloak v-for="creditCard in creditCards" class="bankCard m-2">
-                            <div class="bankCard__front bankCard__part" v-bind:class="creditCard.cardColor">
-                                <img class="bankCard__front-square bankCard__square" src="./assets/visa.png">
-                                <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
-                                <p class="bankCard_numer">{{creditCard.number}}</p>
-                                <div class="bankCard__space-75">
-                                    <span class="bankCard__label">Card holder</span>
-                                    <p class="bankCard__info">{{creditCard.cardholder}}</p>
-                                </div>
-                                <div class="bankCard__space-25">
-                                    <span class="bankCard__label">Expires</span>
-                                    <p class="bankCard__info">{{creditCard.thruDate}}</p>
-                                </div>
-                            </div>
-                    
-                            <div class="bankCard__back bankCard__part" v-bind:class="creditCard.cardColor">
-                                <div class="bankCard__black-line"></div>
-                                <div class="bankCard__back-content">
-                                    <div class="bankCard__secret">
-                                        <p class="bankCard__secret--last">{{creditCard.cvv}}</p>
+                        <div v-cloak v-for="creditCard in creditCards" class="d-flex flex-column align-items-center">
+                            <div class="bankCard m-2">
+                                <div class="bankCard__front bankCard__part" v-bind:class="[creditCard.cardColor, creditCard.expiredClass]">
+                                    <img class="bankCard__front-square bankCard__square" src="./assets/visa.png">
+                                    <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    <p class="bankCard_numer">{{creditCard.number}}</p>
+                                    <div class="bankCard__space-75">
+                                        <span class="bankCard__label">Card holder</span>
+                                        <p class="bankCard__info">{{creditCard.cardholder}}</p>
                                     </div>
-                                    <img class="bankCard__back-square bankCard__square" src="./assets/visa.png">
-                                    <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    <div class="bankCard__space-25">
+                                        <span class="bankCard__label">Expires</span>
+                                        <p class="bankCard__info">{{creditCard.thruDate}}</p>
+                                    </div>
                                 </div>
-                            </div>    
+                                
+                                <div class="bankCard__back bankCard__part" v-bind:class="[creditCard.cardColor, creditCard.expiredClass]">
+                                    <div class="bankCard__black-line"></div>
+                                    <div class="bankCard__back-content">
+                                        <div class="bankCard__secret">
+                                            <p class="bankCard__secret--last">{{creditCard.cvv}}</p>
+                                        </div>
+                                        <img class="bankCard__back-square bankCard__square" src="./assets/visa.png">
+                                        <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    </div>
+                                </div>    
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" v-on:click="setErasedCard" class="btn btn-danger" :value="creditCard.number">Delete card</button>
                         </div>
                     </div>
 
-                    <div class="d-flex flex-column col-12 col-lg-4 align-items-center">
+                    <div class="d-flex flex-column col-12 col-lg-4 align-items-center mt-5 mt-lg-0">
                         <h2 v-if="creditCards.length + debitCards.length !== 0">Debit Cards</h2>
                         <p v-if="debitCards.length === 0 && creditCards.length + debitCards.length !== 0">You do not have any debit cards</p>
-                        <div v-cloak v-for="debitCard in debitCards" class="bankCard m-2">
-                            <div class="bankCard__front bankCard__part" v-bind:class="debitCard.cardColor">
-                                <img class="bankCard__front-square bankCard__square" src="./assets/visa-debito.png">
-                                <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
-                                <p class="bankCard_numer">{{debitCard.number}}</p>
-                                <div class="bankCard__space-75">
-                                    <span class="bankCard__label">Card holder</span>
-                                    <p class="bankCard__info">{{debitCard.cardholder}}</p>
-                                </div>
-                                <div class="bankCard__space-25">
-                                    <span class="bankCard__label">Expires</span>
-                                    <p class="bankCard__info">{{debitCard.thruDate}}</p>
-                                </div>
-                            </div>
-                    
-                            <div class="bankCard__back bankCard__part" v-bind:class="debitCard.cardColor">
-                                <div class="bankCard__black-line"></div>
-                                <div class="bankCard__back-content">
-                                    <div class="bankCard__secret">
-                                        <p class="bankCard__secret--last">{{debitCard.cvv}}</p>
+                        <div  v-cloak v-for="debitCard in debitCards" class="d-flex flex-column align-items-center">
+                            <div class="bankCard m-2">
+                                <div class="bankCard__front bankCard__part" v-bind:class="[debitCard.cardColor, debitCard.expiredClass]">
+                                    <img class="bankCard__front-square bankCard__square" src="./assets/visa-debito.png">
+                                    <img class="bankCard__front-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    <p class="bankCard_numer">{{debitCard.number}}</p>
+                                    <div class="bankCard__space-75">
+                                        <span class="bankCard__label">Card holder</span>
+                                        <p class="bankCard__info">{{debitCard.cardholder}}</p>
                                     </div>
-                                    <img class="bankCard__back-square bankCard__square" src="./assets/visa-debito.png">
-                                    <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    <div class="bankCard__space-25">
+                                        <span class="bankCard__label">Expires</span>
+                                        <p class="bankCard__info">{{debitCard.thruDate}}</p>
+                                    </div>
                                 </div>
-                            </div>    
+                                
+                                <div class="bankCard__back bankCard__part" v-bind:class="[debitCard.cardColor, debitCard.expiredClass]">
+                                    <div class="bankCard__black-line"></div>
+                                    <div class="bankCard__back-content">
+                                        <div class="bankCard__secret">
+                                            <p class="bankCard__secret--last">{{debitCard.cvv}}</p>
+                                        </div>
+                                        <img class="bankCard__back-square bankCard__square" src="./assets/visa-debito.png">
+                                        <img class="bankCard__back-logo bankCard__logo" src="./assets/logo-favicon.png">
+                                    </div>
+                                </div>    
+                            </div>
+                            <button data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" v-on:click="setErasedCard" class="btn btn-danger" :value="debitCard.number">Delete card</button>
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-lightGray">
+                          <h5 class="modal-title" id="confirmDeleteModalTitle">Enter your password to confirm card deletion</h5>
+                        </div>
+                        <div class="modal-body bg-lightGray">
+                            <div class="col-12 mb-3 w-100">
+                                <label for="passwordInput" class="col-12">
+                                    Password
+                                    <input type="password" v-model="password" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="passwordInput">
+                                </label>
+                            </div>
+                            <p v-if="cardDeletionError !== ''" class="text-danger text-center"><i class="bi-exclamation-circle-fill"></i> {{cardDeletionError}}</p>
+                        </div>
+                        <div class="modal-footer bg-lightGray">
+                          <button v-on:click="deleteCard" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded">Accept</button>
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                 <div class="d-flex justify-content-center">
                     <button v-cloak v-if="6 > creditCards.length + debitCards.length" type="button" class="color-lightGray bg-petrolBlue ps-3 pe-3 pt-2 pb-2 border-0 rounded mt-4" data-bs-toggle="modal" data-bs-target="#cardCreationModal" style="width: 16rem;">New Card</button>

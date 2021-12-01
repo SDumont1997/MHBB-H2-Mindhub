@@ -55,8 +55,8 @@ const app = Vue.createApp({
                 console.error(error)
             })
         },
-        addAccount(){
-            axios.post("/api/clients/current/accounts")
+        addAccount(event){
+            axios.post("/api/clients/current/accounts", `type=${event.target.value}`)
             .then(response => {
                 window.location.reload()
             })

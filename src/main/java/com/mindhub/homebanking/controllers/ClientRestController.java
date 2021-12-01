@@ -2,6 +2,7 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -57,7 +58,7 @@ public class ClientRestController {
         while(accountService.getByNumber(accountNumber) != null){
             accountNumber = "MHB-" + getRandomNumber(1, 99999999);
         }
-        accountService.save(new Account(newClient, accountNumber, 0));
+        accountService.save(new Account(newClient, accountNumber, 0, AccountType.SAVINGS));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

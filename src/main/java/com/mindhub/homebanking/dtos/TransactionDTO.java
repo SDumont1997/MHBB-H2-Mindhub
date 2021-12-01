@@ -10,6 +10,7 @@ public class TransactionDTO {
     private String otherPart;
     private String detail;
     private String dateTime;
+    private Double accountState;
 
     public TransactionDTO(){
 
@@ -22,6 +23,7 @@ public class TransactionDTO {
         this.otherPart = transaction.getOtherPart();
         this.detail = transaction.getDetail();
         this.dateTime = transaction.getDateTime();
+        this.accountState = transaction.getAccountState();
     }
 
     public Long getId(){
@@ -66,6 +68,14 @@ public class TransactionDTO {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Double getAccountState() {
+        return accountState;
+    }
+
+    public void setAccountState(Double accountState) {
+        this.accountState = accountState;
     }
 
     @Override

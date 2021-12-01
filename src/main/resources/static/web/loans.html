@@ -146,8 +146,8 @@
                                     <div class="col-12 mb-2 w-100">
                                         <label for="typeSelect" class="col-12">
                                             Select loan type
-                                            <select v-on:change="setPayments" v-model="loanType" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="typeSelect">
-                                                <option v-for="loan in loans" :value="loan.id">{{loan.name}} - Maximum ${{loan.maxAmount}}</option>
+                                            <select v-on:change="setLoanDetails" v-model="loanType" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="typeSelect">
+                                                <option v-for="loan in loans" :value="loan.id">{{loan.name}} - Maximum ${{loan.maxAmount}} - {{loan.interest}}% interest</option>
                                             </select>
                                         </label>
                                     </div>
@@ -193,8 +193,9 @@
                           <p v-if="loanType !== ''" class="text-center">Loan type: {{loanName}}</p>
                           <p v-if="loanPayments !== ''" class="text-center">Loan payments: {{loanPayments}}</p>
                           <p v-if="loanAmount !== ''" class="text-center">Amount: ${{loanAmount}}</p>
-                          <p v-if="loanAmount !== ''" class="text-center">Amount with interests: ${{loanAmount + loanAmount/5}}</p>
-                          <p v-if="loanAmount !== '' && loanPayments !== ''" class="text-center">Amount per payment: ${{(loanAmount + loanAmount/5)/loanPayments}}</p>
+                          <p v-if="loanType !== '' && loanAmount !== ''" class="text-center">Interest: {{loanInterest}}%</p>
+                          <p v-if="loanAmount !== ''" class="text-center">Amount with interests: ${{(loanAmount + loanAmount/100 * loanInterest).toFixed(2)}}</p>
+                          <p v-if="loanAmount !== '' && loanPayments !== ''" class="text-center">Amount per payment: ${{((loanAmount + loanAmount/100 * loanInterest)/loanPayments).toFixed(2)}}</p>
                           <p v-if="destinationAccount !== ''" class="text-center">Destination account: {{destinationAccount}}</p>
                         </div>
                         <div class="modal-footer bg-lightGray">

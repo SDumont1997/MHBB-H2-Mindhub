@@ -360,7 +360,7 @@ input.bg-petrolBlue:hover {
   animation-name: slideFromLeft;
 }
 
-@Keyframes slideFromLeft{
+@keyframes slideFromLeft{
   from{
     margin-right: 200%;
   }
@@ -374,11 +374,21 @@ input.bg-petrolBlue:hover {
   animation-name: slideFromRight;
 }
 
-@Keyframes slideFromRight{
+@keyframes slideFromRight{
   from {
     margin-left: 200%;
   }
   to {
     margin-left: 0%;
   }
+}
+
+.expiredCard{
+filter: 
+  grayscale(100%) 
+  brightness(40%) 
+  sepia(100%) 
+  hue-rotate(-50deg) 
+  saturate(600%) 
+  contrast(0.8);
 }

@@ -26,6 +26,8 @@ public class Transaction {
 
     private String dateTime;
 
+    private Double accountState;
+
     public Transaction(){
 
     }
@@ -35,6 +37,12 @@ public class Transaction {
         this.amount = amount;
         this.otherPart = otherPart;
         this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm"));
+        if (type == TransactionType.CREDIT){
+            this.accountState = account.getBalance() + amount;
+        }
+        if (type == TransactionType.DEBIT){
+            this.accountState = account.getBalance() - amount;
+        }
         account.addTransaction(this);
     }
 
@@ -44,6 +52,12 @@ public class Transaction {
         this.otherPart = otherPart;
         this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm"));
         this.detail = detail;
+        if (type == TransactionType.CREDIT){
+            this.accountState = account.getBalance() + amount;
+        }
+        if (type == TransactionType.DEBIT){
+            this.accountState = account.getBalance() - amount;
+        }
         account.addTransaction(this);
     }
 
@@ -90,6 +104,14 @@ public class Transaction {
     public String getDateTime() { return this.dateTime; }
 
     public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm")); }
+
+    public Double getAccountState(){
+        return this.accountState;
+    }
+
+    public void setAccountState(Double accountState){
+        this.accountState = accountState;
+    }
 
     @Override
     public String toString() {

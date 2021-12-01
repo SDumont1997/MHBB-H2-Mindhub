@@ -22,8 +22,8 @@ public class Card {
     private CardColor cardColor;
     private String number;
     private Integer cvv;
-    private String fromDate;
-    private String thruDate;
+    private LocalDate fromDate;
+    private LocalDate thruDate;
 
     public Card(){
 
@@ -35,8 +35,8 @@ public class Card {
         this.cardColor = cardColor;
         this.number = number;
         this.cvv = cvv;
-        this.fromDate = fromDate.format(DateTimeFormatter.ofPattern("MM/yy"));
-        this.thruDate = thruDate.format(DateTimeFormatter.ofPattern("MM/yy"));
+        this.fromDate = fromDate;
+        this.thruDate = thruDate;
     }
 
     public Long getId() {
@@ -83,20 +83,20 @@ public class Card {
         this.cvv = cvv;
     }
 
-    public String getFromDate() {
+    public LocalDate getFromDate() {
         return this.fromDate;
     }
 
     public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate.format(DateTimeFormatter.ofPattern("MM/yy"));
+        this.fromDate = fromDate;
     }
 
-    public String getThruDate() {
+    public LocalDate getThruDate() {
         return this.thruDate;
     }
 
     public void setThruDate(LocalDate thruDate) {
-        this.thruDate = thruDate.format(DateTimeFormatter.ofPattern("MM/yy"));
+        this.thruDate = thruDate;
     }
 
     @Override

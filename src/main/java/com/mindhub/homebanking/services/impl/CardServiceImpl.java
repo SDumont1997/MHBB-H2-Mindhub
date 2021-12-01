@@ -25,7 +25,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public Card getByNumber(String number) { return cardRepository.findByNumber(number); }
+
+    @Override
     public Card save(Card card) {
         return cardRepository.save(card);
     }
+
+    @Override
+    public void delete(Card card) { cardRepository.delete(card); }
 }

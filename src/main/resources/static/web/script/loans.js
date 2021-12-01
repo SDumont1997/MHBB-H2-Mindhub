@@ -9,6 +9,7 @@ const app = Vue.createApp({
             loanName: "",
             loanPayments: "",
             loanAmount: 0.0,
+            loanInterest: 0.0,
             destinationAccount: "",
             loanApplicationError: ""
         }
@@ -57,9 +58,10 @@ const app = Vue.createApp({
                 console.error(error)
             })
         },
-        setPayments(){
+        setLoanDetails(){
             this.possiblePayments = this.loans.filter(loan => loan.id === this.loanType)[0].payments
             this.loanName = this.loans.filter(loan => loan.id === this.loanType)[0].name
+            this.loanInterest = this.loans.filter(loan=> loan.id === this.loanType)[0].interest
         },
         createLoanApplication(){
             axios.post("/api/loans", {loanId: this.loanType, loanAmount: this.loanAmount, payments: this.loanPayments, destinationAccountNumber: this.destinationAccount})

@@ -127,4 +127,4 @@ const app = Vue.createApp({
     }
 
 })
-let asd = app.mount("#app")
+app.mount("#app")
