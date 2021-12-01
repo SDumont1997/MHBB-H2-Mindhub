@@ -13,7 +13,7 @@ public class AccountDTO {
     private String creationDate;
     private double balance;
     private Set<TransactionDTO> transactions;
-    private AccountType type;
+    private String type;
 
     public AccountDTO(){
 
@@ -25,7 +25,7 @@ public class AccountDTO {
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
         this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
-        this.type = account.getType();
+        this.type = account.getType().toString().substring(0, 1) + account.getType().toString().substring(1).toLowerCase();
     }
 
     public Long getId() {
@@ -64,12 +64,12 @@ public class AccountDTO {
         this.transactions = transactions;
     }
 
-    public AccountType getType() {
+    public String getType() {
         return type;
     }
 
     public void setType(AccountType type) {
-        this.type = type;
+        this.type = type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase();;
     }
 
     @Override
