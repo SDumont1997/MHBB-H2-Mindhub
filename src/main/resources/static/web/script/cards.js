@@ -4,8 +4,10 @@ const app = Vue.createApp({
             client: {},
             creditCards: [],
             debitCards: [],
+            accounts: [],
             cardType: "Card Type",
             cardColor: "Card Color",
+            associatedAccount: "",
             cardCreationErrorMessage: "",
             cardNumber: "",
             password: "",
@@ -22,6 +24,7 @@ const app = Vue.createApp({
                 this.client = response.data
                 this.creditCards = this.sortById(response.data.cards).filter(card => card.cardType === "CREDIT")
                 this.debitCards = this.sortById(response.data.cards).filter(card => card.cardType === "DEBIT")
+                this.accounts = this.sortById(response.data.accounts)
             })
             .catch(e => {
                 console.log(e)
@@ -46,7 +49,7 @@ const app = Vue.createApp({
             })
         },
         createCard(){
-            axios.post("/api/clients/current/cards", `cardType=${this.cardType}&cardColor=${this.cardColor}`)
+            axios.post("/api/clients/current/cards", `cardType=${this.cardType}&cardColor=${this.cardColor}&accountNumber=${this.associatedAccount}`)
             .then(response => {
                 window.location.reload()
             })
@@ -65,7 +68,7 @@ const app = Vue.createApp({
     },
     computed: {
         isDisabled(){
-            if(this.cardType === "Card Type" || this.cardColor === "Card Color"){
+            if(this.cardType === "Card Type" || this.cardColor === "Card Color" || this.associatedAccount === ""){
                 return true
             }
             return false
@@ -73,4 +76,4 @@ const app = Vue.createApp({
     }
 })
 
-let asd = app.mount("#app")
+app.mount("#app")

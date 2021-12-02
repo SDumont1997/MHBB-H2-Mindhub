@@ -96,7 +96,31 @@
                             <h6 class="card-subtitle mb-2 text-muted">Balance $<span v-cloak>{{account.balance}}</span></h6>
                             <p class="card-text">Creation date <span v-cloak>{{account.creationDate}}</span></p>
                             <a :href="'./account.html?id=' + account.id"><button class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded" type="submit">Transaction history</button></a>
+                            <button v-on:click="setDisabledAccount" data-bs-toggle="modal" data-bs-target="#disableAccountModal" class="bg-danger text-light ps-3 pe-3 pt-2 pb-2 mt-2 border-0 rounded" :value="account.number">Delete account</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="disableAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-lightGray">
+                          <h5 class="modal-title" id="disableAccountModalTitle">Enter password to confirm deletion</h5>
+                        </div>
+                        <div class="modal-body bg-lightGray d-flex flex-column align-items-center">
+                            <div class="col-12 mb-3 w-100">
+                                <label for="passwordInput" class="col-12">
+                                    Password
+                                    <input type="password" v-model="password" class="col-12 border-start-0 border-end-0 border-top-0 border-primary pt-2 pb-2" id="passwordInput">
+                                </label>
+                            </div>
+                            <p v-if="disableError !== ''" class="text-danger text-center"><i class="bi-exclamation-circle-fill"></i> {{disableError}}</p>
+                        </div>
+                        <div class="modal-footer bg-lightGray">
+                            <button v-on:click="disableAccount" class="bg-petrolBlue text-light ps-3 pe-3 pt-2 pb-2 border-0 rounded">Confirm</button>
+                            <button data-bs-dismiss="modal" class="btn btn-danger">Cancel</button>
+                        </div>
+                      </div>
                     </div>
                 </div>
 
@@ -268,6 +292,7 @@
                                 <i v-if="loan.loanType === 'Mortgage'" class="bi-house-fill color-lightGray loan-icon"></i>
                                 <i v-if="loan.loanType === 'Personal'" class="bi-wallet-fill color-lightGray loan-icon"></i>
                                 <i v-if="loan.loanType === 'Vehicle'" class="fas fa-car color-lightGray loan-icon"></i>
+                                <i v-if="loan.loanType !== 'Mortgage' && loan.loanType !== 'Personal' && loan.loanType !== 'Vehicle'" class="bi-currency-dollar color-lightGray loan-icon"></i>
                             </div>
                         </div>
                     </div>

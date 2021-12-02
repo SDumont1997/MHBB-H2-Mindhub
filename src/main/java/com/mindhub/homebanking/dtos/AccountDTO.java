@@ -14,6 +14,7 @@ public class AccountDTO {
     private double balance;
     private Set<TransactionDTO> transactions;
     private String type;
+    private boolean disabled;
 
     public AccountDTO(){
 
@@ -26,6 +27,7 @@ public class AccountDTO {
         this.balance = account.getBalance();
         this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
         this.type = account.getType().toString().substring(0, 1) + account.getType().toString().substring(1).toLowerCase();
+        this.disabled = account.isDisabled();
     }
 
     public Long getId() {
@@ -72,6 +74,14 @@ public class AccountDTO {
         this.type = type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase();;
     }
 
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AccountDTO{");
@@ -81,6 +91,7 @@ public class AccountDTO {
         sb.append(", creationDate=").append(creationDate);
         sb.append(", balance=").append(balance);
         sb.append(", transactions=").append(transactions);
+        sb.append(", disabled=").append(disabled);
         sb.append('}');
         return sb.toString();
     }

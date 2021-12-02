@@ -14,7 +14,10 @@ const app = Vue.createApp({
             anotherReceiverSelector: "",
             slideLeftOn: "",
             slideRightOn: "slideFromRight",
-            frequents: []
+            frequents: [],
+            disabledAccountNumber: "",
+            password: "",
+            disableError: ""
         }
     },
     created(){
@@ -26,7 +29,7 @@ const app = Vue.createApp({
             axios.get("/api/clients/current")
             .then(response => {
                 this.client = response.data
-                this.accounts = this.sortById(response.data.accounts)
+                this.accounts = this.sortById(response.data.accounts.filter(account=> account.disabled === false))
                 this.loans = this.sortById(response.data.loans)
                 this.frequents = this.sortById(response.data.frequents)
             })
@@ -96,6 +99,14 @@ const app = Vue.createApp({
         },
         changeDestination(event){
             this.destinationAccount = event.target.value
+        },
+        setDisabledAccount(event){
+            this.disabledAccountNumber = event.target.value
+        },
+        disableAccount(){
+            axios.post("/api/clients/current/accounts/disable", `accountNumber=${this.disabledAccountNumber}&password=${this.password}`)
+            .then(response=> window.location.reload())
+            .catch(error=> this.disableError = error.response.data)
         }
     },
     computed: {

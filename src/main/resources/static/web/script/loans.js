@@ -11,7 +11,12 @@ const app = Vue.createApp({
             loanAmount: 0.0,
             loanInterest: 0.0,
             destinationAccount: "",
-            loanApplicationError: ""
+            loanApplicationError: "",
+            newLoanName: "",
+            newLoanMax: 0.00,
+            newLoanPayments: [],
+            newLoanInterest: 0.00,
+            loanCreationError: ""
         }
     },
     created(){
@@ -71,6 +76,14 @@ const app = Vue.createApp({
             .catch(error => {
                 this.loanApplicationError = error.response.data
             })
+        },
+        sortPayments(){
+            this.newLoanPayments.sort((a, b) => a - b)
+        },
+        createLoan(){
+            axios.post("/api/loans/addNew", `loanName=${this.newLoanName}&maxAmount=${this.newLoanMax}&payments=${this.newLoanPayments}&interest=${this.newLoanInterest}`)
+            .then(response=> window.location.reload())
+            .catch(error => this.loanCreationError = error.response.data)
         }
     },
     computed: {

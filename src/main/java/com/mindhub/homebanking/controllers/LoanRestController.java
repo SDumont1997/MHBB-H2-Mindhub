@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -80,6 +81,19 @@ public class LoanRestController {
         transactionService.save(new Transaction(account, TransactionType.CREDIT, loanApplicationDTO.getLoanAmount(), "Mindhub Brothers Bank", "Loan approved"));
         account.setBalance(account.getBalance() + loanApplicationDTO.getLoanAmount());
         accountService.save(account);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/loans/addNew")
+    public ResponseEntity<Object> addLoanType(@RequestParam String loanName, @RequestParam Double maxAmount, @RequestParam ArrayList<Integer> payments, @RequestParam Double interest){
+        if (loanName.isEmpty() || payments.isEmpty()){
+            return new ResponseEntity<>("Missing parameters", HttpStatus.BAD_REQUEST);
+        }
+        if (maxAmount < 1 || interest < 1 || payments.stream().anyMatch(integer -> integer < 1)){
+            return new ResponseEntity<>("All numeric values must be one or higher", HttpStatus.FORBIDDEN);
+        }
+        loanService.save(new Loan(loanName, maxAmount, payments, interest));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

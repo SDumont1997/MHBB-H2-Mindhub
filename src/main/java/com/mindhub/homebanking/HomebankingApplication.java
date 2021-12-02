@@ -53,9 +53,9 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan1);
 			ClientLoan clientLoan2 = new ClientLoan(50000.00, 12, client1, personal);
 			clientLoanRepository.save(clientLoan2);
-			Card card1 = new Card(client1, CardType.DEBIT, CardColor.GOLD, "4563 8000 7465 9784", 772, LocalDate.now().minusYears(6), LocalDate.now().minusYears(1));
+			Card card1 = new Card(client1, CardType.DEBIT, CardColor.GOLD, "4563 8000 7465 9784", 772, LocalDate.now().minusYears(6), LocalDate.now().minusYears(1), "MHB-1");
 			cardRepository.save(card1);
-			Card card2 = new Card(client1, CardType.CREDIT, CardColor.TITANIUM, "7705 7834 5500 3214", 238, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card card2 = new Card(client1, CardType.CREDIT, CardColor.TITANIUM, "7705 7834 5500 3214", 238, LocalDate.now(), LocalDate.now().plusYears(5), "MHB-2");
 			cardRepository.save(card2);
 
 			Client client2 = new Client("Santiago", "Dumont", "sdumont@gmail.com", passwordEncoder.encode("santiago1234"));
@@ -78,9 +78,9 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan3);
 			ClientLoan clientLoan4 = new ClientLoan(200000.00, 36, client2, vehicle);
 			clientLoanRepository.save(clientLoan4);
-			Card card3 = new Card(client2, CardType.CREDIT, CardColor.SILVER, "5450 8842 8080 9908", 725, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card card3 = new Card(client2, CardType.CREDIT, CardColor.SILVER, "5450 8842 8080 9908", 725, LocalDate.now(), LocalDate.now().plusYears(5), "MHB-3");
 			cardRepository.save(card3);
-			Card card4 = new Card(client2, CardType.DEBIT, CardColor.TITANIUM, "6080 2253 9846 3300", 226, LocalDate.now().minusYears(2), LocalDate.now().plusYears(3));
+			Card card4 = new Card(client2, CardType.DEBIT, CardColor.TITANIUM, "6080 2253 9846 3300", 226, LocalDate.now().minusYears(2), LocalDate.now().plusYears(3), "MHB-4");
 			cardRepository.save(card4);
 		};
 	}

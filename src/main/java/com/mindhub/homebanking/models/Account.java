@@ -27,6 +27,10 @@ public class Account {
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
 
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
+    private boolean disabled;
 
     public Account() {
 
@@ -37,6 +41,7 @@ public class Account {
         this.creationDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.balance = balance;
         this.type = type;
+        this.disabled = false;
         owner.addAccount(this);
     }
 
@@ -93,6 +98,22 @@ public class Account {
         this.type = type;
     }
 
+    public Set<Card> getCards(){
+        return this.cards;
+    }
+
+    public void addCard(Card card){
+        this.cards.add(card);
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Account{");
@@ -103,6 +124,7 @@ public class Account {
         sb.append(", balance=").append(balance);
         sb.append(", owner=").append(owner);
         sb.append(", transactions=").append(transactions);
+        sb.append(", disabled=").append(disabled);
         sb.append('}');
         return sb.toString();
     }

@@ -9,7 +9,6 @@ const app = Vue.createApp({
     },
     created(){
         this.loadData()
-        console.log(this.transactions.length)
     },
     methods: {
         loadData(){
@@ -20,6 +19,9 @@ const app = Vue.createApp({
             axios.all([request1, request2]).then(axios.spread((...responses) => {
                 this.client = responses[0].data
                 this.account = responses[1].data
+                if(responses[1].data.disabled === true){
+                    window.location.replace("/web/accounts.html")
+                }
                 this.transactions = this.sortById(responses[1].data.transactions)
             }))
             .catch(error =>{

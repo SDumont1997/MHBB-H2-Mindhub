@@ -10,10 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @EnableWebSecurity
 
@@ -26,10 +30,12 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/h2-console/**").hasAuthority("ADMIN")
                 .antMatchers("/web/manager.html").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/loans/addNew").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/transactions").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/loans").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/cards/purchase").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 .antMatchers("/api/clients/current/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/api/loans").hasAnyAuthority("USER", "ADMIN")
@@ -74,12 +80,15 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
         http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
+
+        http.cors();
     }
 
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher(){
         return new HttpSessionEventPublisher();
     }
+
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
 

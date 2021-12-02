@@ -25,11 +25,15 @@ public class Card {
     private LocalDate fromDate;
     private LocalDate thruDate;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     public Card(){
 
     }
 
-    public Card(Client cardholder, CardType cardType, CardColor cardColor, String number, Integer cvv, LocalDate fromDate, LocalDate thruDate){
+    public Card(Client cardholder, CardType cardType, CardColor cardColor, String number, Integer cvv, LocalDate fromDate, LocalDate thruDate, String accountNumber){
         this.cardholder = cardholder;
         this.cardType = cardType;
         this.cardColor = cardColor;
@@ -37,6 +41,8 @@ public class Card {
         this.cvv = cvv;
         this.fromDate = fromDate;
         this.thruDate = thruDate;
+        this.account = cardholder.getAccounts().stream().filter(account1 -> account1.getNumber().equals(accountNumber)).findFirst().get();
+        cardholder.getAccounts().stream().filter(account1 -> account1.getNumber().equals(accountNumber)).findFirst().get().addCard(this);
     }
 
     public Long getId() {
@@ -99,6 +105,14 @@ public class Card {
         this.thruDate = thruDate;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(String accountNumber) {
+        this.account = this.cardholder.getAccounts().stream().filter(account1 -> account1.getNumber() == accountNumber).findFirst().get();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Card{");
@@ -110,6 +124,7 @@ public class Card {
         sb.append(", cvv=").append(cvv);
         sb.append(", fromDate=").append(fromDate);
         sb.append(", thruDate=").append(thruDate);
+        sb.append(", account=").append(account);
         sb.append('}');
         return sb.toString();
     }
