@@ -23,6 +23,7 @@ const app = Vue.createApp({
                     window.location.replace("/web/accounts.html")
                 }
                 this.transactions = this.sortById(responses[1].data.transactions)
+                this.filteredTransactions = this.sortById(responses[1].data.transactions)
             }))
             .catch(error =>{
                 if(error.response.status === 500){
@@ -47,6 +48,20 @@ const app = Vue.createApp({
             .then(response => {
                 window.location.replace("/web/index.html")
             })
+        },
+        getTransactionsPdf(){
+            axios.post("/api/transactions/export/pdf", `id=${this.accountId}`, {responseType: 'blob'})
+            .then(response=> {
+                let file = response.headers['content-disposition']
+                let fileName = decodeURI(file.substring(20))
+                let link = document.createElement('a')
+                link.href= URL.createObjectURL(response.data)
+                link.download = fileName
+                link.click()
+                link.remove()
+                setTimeout(()=>window.location.reload(), 3000)
+            })
+            .catch(error=> console.log(error.response.data))
         }
     }
 })

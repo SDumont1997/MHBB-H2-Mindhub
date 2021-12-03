@@ -1,8 +1,10 @@
 package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.datetime.DateFormatter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -24,7 +26,7 @@ public class Transaction {
 
     private String detail;
 
-    private String dateTime;
+    private String date;
 
     private Double accountState;
 
@@ -36,7 +38,7 @@ public class Transaction {
         this.type = type;
         this.amount = amount;
         this.otherPart = otherPart;
-        this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm"));
+        this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         if (type == TransactionType.CREDIT){
             this.accountState = account.getBalance() + amount;
         }
@@ -50,7 +52,7 @@ public class Transaction {
         this.type = type;
         this.amount = amount;
         this.otherPart = otherPart;
-        this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm"));
+        this.date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.detail = detail;
         if (type == TransactionType.CREDIT){
             this.accountState = account.getBalance() + amount;
@@ -101,9 +103,9 @@ public class Transaction {
 
     public void setDetail(String detail) { this.detail = detail; }
 
-    public String getDateTime() { return this.dateTime; }
+    public String getDate() { return this.date; }
 
-    public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm")); }
+    public void setDate(LocalDateTime dateTime) { this.date = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); }
 
     public Double getAccountState(){
         return this.accountState;

@@ -62,7 +62,7 @@ public class CardRestController {
     }
 
     @Transactional
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
+    @CrossOrigin(origins = "*")
     @PostMapping("/cards/purchase")
     public ResponseEntity<Object> registerPurchase(@RequestBody CardPurchaseDTO cardPurchaseDTO){
         if (cardPurchaseDTO.getCardNumber().isEmpty() || cardPurchaseDTO.getCvv().toString().isEmpty() || cardPurchaseDTO.getAmount().toString().isEmpty() || cardPurchaseDTO.getStoreName().isEmpty() || cardPurchaseDTO.getDetail().isEmpty()){

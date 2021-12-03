@@ -9,7 +9,7 @@ public class TransactionDTO {
     private Double amount;
     private String otherPart;
     private String detail;
-    private String dateTime;
+    private String date;
     private Double accountState;
 
     public TransactionDTO(){
@@ -22,7 +22,7 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.otherPart = transaction.getOtherPart();
         this.detail = transaction.getDetail();
-        this.dateTime = transaction.getDateTime();
+        this.date = transaction.getDate();
         this.accountState = transaction.getAccountState();
     }
 
@@ -62,12 +62,12 @@ public class TransactionDTO {
         this.detail = detail;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String dateTime) {
+        this.date = dateTime;
     }
 
     public Double getAccountState() {
